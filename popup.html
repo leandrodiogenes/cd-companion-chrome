@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      width: 240px;
+      font: 13px/1.5 'Segoe UI', system-ui, sans-serif;
+      background: #111318;
+      color: #e8e8e8;
+      padding: 12px;
+    }
+    h1 {
+      font-size: 13px;
+      color: #ffd060;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      gap: 8px;
+    }
+    label { font-size: 12px; color: #aaa; }
+    .value { font-size: 12px; color: #ddd; font-family: monospace; }
+    input[type="range"] {
+      flex: 1;
+      accent-color: #80b4ff;
+      cursor: pointer;
+    }
+    .range-value {
+      min-width: 42px;
+      text-align: right;
+      color: #ffd060;
+      font: 12px Consolas, monospace;
+    }
+    .check-row input {
+      accent-color: #ffd060;
+      cursor: pointer;
+    }
+    .status-dot {
+      display: inline-block;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #555;
+      margin-right: 5px;
+    }
+    .status-dot.connected { background: #60e890; }
+    .status-dot.disconnected { background: #e07070; }
+    button {
+      width: 100%;
+      margin-top: 8px;
+      padding: 6px;
+      background: rgba(255,208,96,0.12);
+      border: 1px solid rgba(255,208,96,0.35);
+      color: #ffd060;
+      border-radius: 5px;
+      font: 12px 'Segoe UI', sans-serif;
+      cursor: pointer;
+    }
+    button:hover { background: rgba(255,208,96,0.25); }
+    #follow-btn.active {
+      background: rgba(80,220,120,0.15);
+      border-color: rgba(80,220,120,0.4);
+      color: #60e890;
+    }
+    .hint {
+      font-size: 10px;
+      color: #555;
+      margin-top: 8px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>🗺 CD Companion</h1>
+
+  <div class="row">
+    <label><span class="status-dot" id="ws-dot"></span><span id="ws-label">…</span></label>
+  </div>
+  <div class="row">
+    <label>Coords</label>
+    <span class="value" id="coords">--</span>
+  </div>
+  <div class="row">
+    <label>Realm</label>
+    <span class="value" id="realm">--</span>
+  </div>
+  <div class="row">
+    <label>Center Y</label>
+    <span class="range-value" id="center-y-val">1000</span>
+  </div>
+  <div class="row">
+    <input type="range" id="center-y" min="-5000" max="5000" step="10" value="1000">
+  </div>
+  <div class="row">
+    <label>Icon size</label>
+    <span class="range-value" id="icon-size-val">1.0</span>
+  </div>
+  <div class="row">
+    <input type="range" id="icon-size" min="0.3" max="1.5" step="0.1" value="1.0">
+  </div>
+  <div class="row">
+    <label>Default zoom</label>
+    <span class="range-value" id="default-zoom-val">15.0</span>
+  </div>
+  <div class="row">
+    <input type="range" id="default-zoom" min="0" max="24" step="0.5" value="15">
+  </div>
+  <div class="row check-row">
+    <label for="auto-hide-found">Hide found</label>
+    <input type="checkbox" id="auto-hide-found">
+  </div>
+  <div class="row check-row">
+    <label for="auto-hide-left">Hide left panel</label>
+    <input type="checkbox" id="auto-hide-left">
+  </div>
+  <div class="row check-row">
+    <label for="auto-hide-right">Hide right panel</label>
+    <input type="checkbox" id="auto-hide-right">
+  </div>
+  <div class="row check-row">
+    <label for="rotate-camera">Rotate by camera</label>
+    <input type="checkbox" id="rotate-camera">
+  </div>
+
+  <button id="follow-btn">Follow: --</button>
+
+  <hr style="border:none;border-top:1px solid #333;margin:10px 0 8px">
+  <div class="row">
+    <label>Server host</label>
+    <input type="text" id="ws-host" placeholder="localhost"
+           style="width:100px;background:#1a1d24;border:1px solid #333;color:#ddd;
+                  border-radius:3px;padding:2px 5px;font:12px Consolas,monospace;text-align:right">
+  </div>
+  <div class="row">
+    <label>WS port</label>
+    <input type="number" id="ws-port" placeholder="7891" min="1" max="65535"
+           style="width:60px;background:#1a1d24;border:1px solid #333;color:#ddd;
+                  border-radius:3px;padding:2px 5px;font:12px Consolas,monospace;text-align:right">
+  </div>
+  <div class="row">
+    <label>WSS port</label>
+    <input type="number" id="wss-port" placeholder="7892" min="1" max="65535"
+           style="width:60px;background:#1a1d24;border:1px solid #333;color:#ddd;
+                  border-radius:3px;padding:2px 5px;font:12px Consolas,monospace;text-align:right">
+  </div>
+
+  <p class="hint">Open MapGenie map page first</p>
+  <script src="popup.js"></script>
+</body>
+</html>

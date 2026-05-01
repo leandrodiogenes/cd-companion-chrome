@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "priority": 1,
+    "action": {
+      "type": "redirect",
+      "redirect": { "extensionPath": "/vendor/map.js" }
+    },
+    "condition": {
+      "regexFilter": "cdn\\.mapgenie\\.io/js/map\\.js",
+      "resourceTypes": ["script"]
+    }
+  }
+]

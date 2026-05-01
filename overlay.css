@@ -1,0 +1,271 @@
+/* ── Companion overlay panel ───────────────────────────────────────── */
+#cdp-overlay {
+  position: fixed;
+  bottom: 52px;
+  right: 58px;
+  z-index: 9999;
+  background: rgba(15, 15, 20, 0.88);
+  color: #e8e8e8;
+  font: 13px/1.4 'Segoe UI', system-ui, sans-serif;
+  border: 1px solid rgba(255, 200, 80, 0.35);
+  border-radius: 8px;
+  padding: 8px 12px;
+  min-width: 210px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  user-select: none;
+  pointer-events: auto;
+  transition: border-color 0.3s;
+}
+
+#cdp-overlay.cdp-offline {
+  border-color: rgba(255, 80, 80, 0.35);
+}
+
+#cdp-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+#cdp-icon {
+  font-size: 15px;
+}
+
+#cdp-title {
+  font-weight: 600;
+  font-size: 12px;
+  color: #ffd060;
+  flex: 1;
+}
+
+#cdp-follow-btn {
+  background: rgba(255, 200, 80, 0.15);
+  border: 1px solid rgba(255, 200, 80, 0.4);
+  color: #ffd060;
+  font: 11px/1 'Segoe UI', sans-serif;
+  padding: 3px 7px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+#cdp-follow-btn:hover {
+  background: rgba(255, 200, 80, 0.3);
+}
+
+#cdp-overlay.cdp-following #cdp-follow-btn {
+  background: rgba(80, 220, 120, 0.2);
+  border-color: rgba(80, 220, 120, 0.5);
+  color: #60e890;
+}
+
+#cdp-coords {
+  font: 12px/1.5 'Consolas', 'Courier New', monospace;
+  color: #bbb;
+  letter-spacing: 0.03em;
+}
+
+#cdp-status {
+  font-size: 11px;
+  color: #888;
+  margin-top: 2px;
+}
+
+#cdp-overlay.cdp-offline #cdp-status {
+  color: #e07070;
+}
+
+/* ── Settings button ───────────────────────────────────────────────── */
+#cdp-settings-btn {
+  background: rgba(255, 200, 80, 0.1);
+  border: 1px solid rgba(255, 200, 80, 0.3);
+  color: #aaa;
+  font: 13px/1 'Segoe UI', sans-serif;
+  padding: 2px 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+#cdp-settings-btn:hover {
+  background: rgba(255, 200, 80, 0.25);
+  color: #ffd060;
+}
+
+/* ── Settings panel ────────────────────────────────────────────────── */
+#cdp-settings-panel {
+  display: none;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 200, 80, 0.2);
+}
+
+#cdp-settings-panel.cdp-open {
+  display: block;
+}
+
+.cdp-setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.cdp-setting-row:last-child {
+  margin-bottom: 0;
+}
+
+.cdp-setting-label {
+  font-size: 11px;
+  color: #bbb;
+  white-space: nowrap;
+}
+
+.cdp-setting-check {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+  color: #bbb;
+  font-size: 11px;
+}
+
+.cdp-setting-check input {
+  accent-color: #ffd060;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+#cdp-icon-size,
+#cdp-default-zoom {
+  flex: 1;
+  accent-color: #ffd060;
+  cursor: pointer;
+}
+
+.cdp-select {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 200, 80, 0.3);
+  color: #e8e8e8;
+  font: 11px 'Segoe UI', sans-serif;
+  padding: 2px 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  outline: none;
+}
+
+.cdp-select:focus {
+  border-color: rgba(255, 200, 80, 0.6);
+}
+
+.cdp-setting-sep {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin: 6px 0;
+}
+
+.cdp-input-text {
+  width: 90px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 200, 80, 0.25);
+  color: #ddd;
+  border-radius: 3px;
+  padding: 2px 5px;
+  font: 11px Consolas, monospace;
+  text-align: right;
+  outline: none;
+}
+
+.cdp-input-num {
+  width: 52px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 200, 80, 0.25);
+  color: #ddd;
+  border-radius: 3px;
+  padding: 2px 5px;
+  font: 11px Consolas, monospace;
+  text-align: right;
+  outline: none;
+}
+
+.cdp-input-text:focus,
+.cdp-input-num:focus {
+  border-color: rgba(255, 200, 80, 0.6);
+}
+
+#cdp-center-y,
+#cdp-center-panel-y {
+  flex: 1;
+  min-width: 110px;
+  accent-color: #80b4ff;
+  cursor: pointer;
+}
+
+#cdp-center-crosshair {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9998;
+}
+
+#cdp-center-crosshair::before,
+#cdp-center-crosshair::after {
+  content: '';
+  position: absolute;
+  background: rgba(255, 208, 96, 0.42);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.55);
+}
+
+#cdp-center-crosshair::before {
+  top: var(--cdp-crosshair-y, 50vh);
+  left: 0;
+  width: 100%;
+  height: 1px;
+  transform: translateY(-50%);
+}
+
+#cdp-center-crosshair::after {
+  top: 0;
+  left: var(--cdp-crosshair-x, 50vw);
+  width: 1px;
+  height: 100%;
+  transform: translateX(-50%);
+}
+
+/* ── Player marker ─────────────────────────────────────────────────── */
+#cdp-marker {
+  position: relative;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.cdp-arrow {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 0 4px rgba(255, 208, 96, 0.9));
+  transition: none;
+}
+
+.cdp-pulse {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border: 2px solid rgba(255, 208, 96, 0.5);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: cdp-pulse 2s ease-out infinite;
+}
+
+@keyframes cdp-pulse {
+  0%   { width: 14px; height: 14px; opacity: 0.8; }
+  100% { width: 36px; height: 36px; opacity: 0; }
+}
