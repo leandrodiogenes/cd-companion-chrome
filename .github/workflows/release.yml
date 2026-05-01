@@ -1,0 +1,43 @@
+name: Build and Release Extension ZIP
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build ZIP (extension files only)
+        run: |
+          zip -r cd-companion-chrome.zip \
+            manifest.json \
+            background.js \
+            bridge.js \
+            content.js \
+            map_override.js \
+            overlay.css \
+            popup.html \
+            popup.js \
+            rules.json \
+            icons/
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: cd-companion-chrome.zip
+          generate_release_notes: false
+          body: |
+            ## Installation
+
+            1. Download `cd-companion-chrome.zip` below
+            2. Extract the ZIP to a folder
+            3. Open `chrome://extensions` and enable **Developer mode**
+            4. Click **Load unpacked** and select the extracted folder
+            5. Open the [MapGenie Crimson Desert map](https://mapgenie.io/crimson-desert/maps/pywel)
