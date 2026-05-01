@@ -763,10 +763,10 @@
     el.innerHTML = `
       <div style="display:flex;align-items:center;gap:6px">
         <span style="color:#ffd060;font-weight:600;flex:1;font-size:12px">⭕ Waypoints</span>
-        <button id="cdp-wp-save" title="Salvar posição atual"
+        <button id="cdp-wp-save" title="Save current position"
           style="background:rgba(255,208,96,.15);border:1px solid rgba(255,208,96,.4);
           color:#ffd060;font:11px 'Segoe UI';padding:2px 8px;border-radius:4px;cursor:pointer">
-          + Salvar
+          + Save
         </button>
       </div>
       <input id="cdp-wp-filter" placeholder="Filtrar waypoints"
@@ -933,39 +933,39 @@
       <div id="cdp-status">Connecting…</div>
       <div id="cdp-settings-panel">
         <div class="cdp-setting-row">
-          <span class="cdp-setting-label">Ícones <span id="cdp-icon-size-val">${iconSize.toFixed(1)}</span></span>
+          <span class="cdp-setting-label">Icons <span id="cdp-icon-size-val">${iconSize.toFixed(1)}</span></span>
           <input type="range" id="cdp-icon-size" min="0.3" max="1.5" step="0.1" value="${iconSize}">
         </div>
         <div class="cdp-setting-row">
-          <span class="cdp-setting-label">Zoom inicial <span id="cdp-default-zoom-val">${defaultZoom.toFixed(1)}</span></span>
+          <span class="cdp-setting-label">Default zoom <span id="cdp-default-zoom-val">${defaultZoom.toFixed(1)}</span></span>
           <input type="range" id="cdp-default-zoom" min="0" max="24" step="0.5" value="${defaultZoom}">
         </div>
         <label class="cdp-setting-check">
-          <span>Girar mapa com player</span>
+          <span>Rotate map with player</span>
           <input type="checkbox" id="cdp-rotate-map" ${rotateWithPlayer ? 'checked' : ''}>
         </label>
         <label class="cdp-setting-check">
-          <span>Girar mapa com câmera</span>
+          <span>Rotate map with camera</span>
           <input type="checkbox" id="cdp-rotate-camera" ${rotateWithCamera ? 'checked' : ''}>
         </label>
         <div class="cdp-setting-row">
-          <span class="cdp-setting-label">Seta de direção</span>
+          <span class="cdp-setting-label">Direction arrow</span>
           <select id="cdp-heading-src" class="cdp-select">
             <option value="auto">Auto</option>
             <option value="entity">Entity vector</option>
-            <option value="delta">Delta posição</option>
+            <option value="delta">Position delta</option>
           </select>
         </div>
         <label class="cdp-setting-check">
-          <span>Ocultar encontrados</span>
+          <span>Hide found</span>
           <input type="checkbox" id="cdp-auto-hide-found" ${autoHideFound ? 'checked' : ''}>
         </label>
         <label class="cdp-setting-check">
-          <span>Ocultar painel esquerdo</span>
+          <span>Hide left panel</span>
           <input type="checkbox" id="cdp-auto-hide-left" ${autoHideLeftSidebar ? 'checked' : ''}>
         </label>
         <label class="cdp-setting-check">
-          <span>Ocultar painel direito</span>
+          <span>Hide right panel</span>
           <input type="checkbox" id="cdp-auto-hide-right" ${autoHideRightSidebar ? 'checked' : ''}>
         </label>
         <hr class="cdp-setting-sep">
