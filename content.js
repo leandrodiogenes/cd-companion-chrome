@@ -516,9 +516,7 @@
       const sid = String(locationId);
       const loc = (window.mapData?.locations || []).find(item => String(item.id) === sid);
       if (!loc || typeof loc.longitude !== 'number' || typeof loc.latitude !== 'number') return;
-      following = false;
       panToPlayer(loc.longitude, loc.latitude);
-      updateOverlay();
     } catch (_) {}
   }
 
