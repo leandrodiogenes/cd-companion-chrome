@@ -511,6 +511,17 @@
     map.easeTo(view);
   }
 
+  function panToLocationId(locationId) {
+    try {
+      const sid = String(locationId);
+      const loc = (window.mapData?.locations || []).find(item => String(item.id) === sid);
+      if (!loc || typeof loc.longitude !== 'number' || typeof loc.latitude !== 'number') return;
+      following = false;
+      panToPlayer(loc.longitude, loc.latitude);
+      updateOverlay();
+    } catch (_) {}
+  }
+
   function createCenterCrosshair() {
     let el = document.getElementById('cdp-center-crosshair');
     if (el) {
@@ -868,6 +879,10 @@
       }
       if (msg.type === 'location_toggle') {
         _onLocationToggle(msg.locationId, msg.found);
+        return;
+      }
+      if (msg.type === 'pan_location') {
+        panToLocationId(msg.locationId);
         return;
       }
       if (msg.type === 'server_config') {
