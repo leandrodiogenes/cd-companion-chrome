@@ -20,7 +20,7 @@
   let lastHeading       = 0;      // degrees, last known movement direction
   let lastCameraHeading = 0;      // degrees, last known camera direction
   let hasCameraHeading  = false;
-  let headingSource     = 'auto'; // 'auto'|'entity'|'delta'
+  let headingSource     = 'delta';
   let rotateWithPlayer  = false;
   let rotateWithCamera  = false;
   let wsStatus          = 'disconnected'; // 'connected' | 'disconnected' | 'no-game'
@@ -49,7 +49,7 @@
         if (typeof s.following     === 'boolean') following     = s.following;
         if (typeof s.iconSize      === 'number')  iconSize      = s.iconSize;
         if (typeof s.defaultZoom   === 'number')  defaultZoom   = s.defaultZoom;
-        if (typeof s.headingSource     === 'string')  headingSource    = s.headingSource;
+        headingSource = 'delta';
         if (typeof s.rotateWithPlayer  === 'boolean') rotateWithPlayer = s.rotateWithPlayer;
         if (typeof s.rotateWithCamera  === 'boolean') rotateWithCamera = s.rotateWithCamera;
         if (typeof s.centerTeleportY === 'number') centerTeleportY = s.centerTeleportY;
@@ -402,19 +402,11 @@
   }
 
   function updateHeading(newPos) {
-    let deg = null;
-    // 'entity' ou 'auto': usa msg.heading se disponível
-    if (headingSource !== 'delta' && typeof newPos.heading === 'number') {
-      deg = newPos.heading;
-    } else if (headingSource !== 'entity') {
-      // 'delta' ou 'auto' sem heading: calcula via delta de posição
-      if (!lastPos) return;
-      const dx = newPos.x - lastPos.x;
-      const dz = newPos.z - lastPos.z;
-      if (dx * dx + dz * dz < 0.001) return;
-      deg = Math.atan2(dx, dz) * 180 / Math.PI;
-    }
-    if (deg === null) return;
+    if (!lastPos) return;
+    const dx = newPos.x - lastPos.x;
+    const dz = newPos.z - lastPos.z;
+    if (dx * dx + dz * dz < 0.001) return;
+    const deg = Math.atan2(dx, dz) * 180 / Math.PI;
     lastHeading = deg;
     updateArrowRotation();
   }
@@ -965,9 +957,7 @@
         </label>
         <div class="cdp-setting-row">
           <span class="cdp-setting-label">Direction arrow</span>
-          <select id="cdp-heading-src" class="cdp-select">
-            <option value="auto">Auto</option>
-            <option value="entity">Entity vector</option>
+          <select id="cdp-heading-src" class="cdp-select" disabled>
             <option value="delta">Position delta</option>
           </select>
         </div>
@@ -1031,10 +1021,6 @@
 
     const headingSel = document.getElementById('cdp-heading-src');
     headingSel.value = headingSource;
-    headingSel.addEventListener('change', (e) => {
-      headingSource = e.target.value;
-      saveSettings();
-    });
 
     document.getElementById('cdp-auto-hide-found').addEventListener('change', (e) => {
       setAutoHideSetting('found', e.target.checked);
