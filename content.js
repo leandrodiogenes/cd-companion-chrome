@@ -40,64 +40,6 @@
   let touchPauseRestore = false;
   let touchCount        = 0;
   let serverConfig      = { wsHost: 'localhost', wsPort: 7891, wssPort: 7892 };
-  let cameraHeadingDebugStats = null;
-
-  function realtimeDebugEnabled() {
-    try {
-      return window.__cdDebugRealtime === true ||
-        localStorage.getItem('cd_debug_realtime') === '1';
-    } catch (_) {
-      return window.__cdDebugRealtime === true;
-    }
-  }
-
-  function recordCameraHeadingDebug(msg) {
-    if (!realtimeDebugEnabled() || typeof msg.heading !== 'number') return;
-    const now = performance.now();
-    if (!cameraHeadingDebugStats) {
-      cameraHeadingDebugStats = {
-        recv: 0,
-        changed: 0,
-        duplicate: 0,
-        gapSum: 0,
-        gapCount: 0,
-        maxGap: 0,
-        lastHeading: null,
-        lastEventAt: null,
-        lastLog: now
-      };
-    }
-    const s = cameraHeadingDebugStats;
-    s.recv += 1;
-    if (s.lastEventAt !== null) {
-      const gap = now - s.lastEventAt;
-      s.gapSum += gap;
-      s.gapCount += 1;
-      s.maxGap = Math.max(s.maxGap, gap);
-    }
-    s.lastEventAt = now;
-    if (s.lastHeading === msg.heading) s.duplicate += 1;
-    else s.changed += 1;
-    s.lastHeading = msg.heading;
-
-    if (now - s.lastLog >= 1000) {
-      const avgGap = s.gapCount ? s.gapSum / s.gapCount : 0;
-      console.info(
-        `[CD realtime chrome] camera_heading recv=${s.recv} ` +
-        `changed=${s.changed} duplicate=${s.duplicate} ` +
-        `last=${s.lastHeading} avgGap=${avgGap.toFixed(1)}ms ` +
-        `maxGap=${s.maxGap.toFixed(1)}ms`
-      );
-      s.recv = 0;
-      s.changed = 0;
-      s.duplicate = 0;
-      s.gapSum = 0;
-      s.gapCount = 0;
-      s.maxGap = 0;
-      s.lastLog = now;
-    }
-  }
-
   // ── Persist settings ───────────────────────────────────────────────
   function loadSettings() {
     try {
@@ -536,7 +478,6 @@
 
   function onCameraHeading(msg) {
     if (typeof msg.heading !== 'number') return;
-    recordCameraHeadingDebug(msg);
     if (hasCameraHeading && msg.heading === lastCameraHeading) return;
     hasCameraHeading = true;
     lastCameraHeading = msg.heading;
