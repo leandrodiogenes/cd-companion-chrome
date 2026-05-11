@@ -35,6 +35,15 @@ chrome.storage.onChanged.addListener((changes, area) => {
         ws = null;
       }
       connect();
+      chrome.storage.local.get(['wsHost', 'wsPort', 'wssPort'], (data) => {
+        const msg = { type: 'server_config',
+          wsHost: data.wsHost || DEFAULT_HOST,
+          wsPort: data.wsPort || DEFAULT_WS_PORT,
+          wssPort: data.wssPort || DEFAULT_WSS_PORT };
+        for (const port of ports) {
+          try { port.postMessage(msg); } catch (_) {}
+        }
+      });
     });
   }
 });
