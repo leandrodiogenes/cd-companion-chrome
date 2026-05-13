@@ -738,7 +738,7 @@
       </div>
       <div style="display:flex;align-items:center;gap:7px">
         <span style="color:#bbb;font-size:11px;white-space:nowrap">Y <span id="cdp-center-panel-y-val">${Math.round(centerTeleportY)}</span></span>
-        <input type="range" id="cdp-center-panel-y" min="-5000" max="5000" step="10"
+        <input type="range" id="cdp-center-panel-y" min="0" max="5000" step="5"
           value="${centerTeleportY}">
       </div>
       <button id="cdp-center-panel-tp" title="Teleportar para o centro da tela"
